@@ -1,0 +1,1893 @@
+swagger: '2.0'
+info:
+  description: Textus API
+  version: 1.0.0
+  title: Textus API
+  contact:
+    email: overflow2341313@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: app.textus.com
+basePath: /api
+tags:
+  - name: 'Auto Replies'
+  - name: 'Blocked Numbers'
+  - name: 'Broadcasts'
+  - name: 'Contacts'
+  - name: 'Groups'
+  - name: 'Message Signatures'
+  - name: 'Message Templates'
+  - name: 'Messages'
+  - name: 'Opt Outs'
+  - name: 'Tags'
+  - name: 'Users'
+  - name: 'Web Hooks'
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /auto_replies:
+    get:
+      operationId: getAllAutoRepliesForCurrentAccount
+      tags:
+        - Auto Replies
+      summary: "Returns all auto replies for the current account."
+      description: "Returns all auto replies for the current account."
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AutoReply"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    post:
+      operationId: createAutoReply
+      tags:
+        - Auto Replies
+      summary: "Creates a new auto reply."
+      description: "Creates a new auto reply."
+      parameters:
+        - name: NewAutoReply
+          in: body
+          schema:
+            $ref: "#/definitions/NewAutoReply"
+          required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AutoReply"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /auto_reply/{id}:
+    get:
+      operationId: getAutoReplyById
+      tags:
+        - Auto Replies
+      summary: "Returns an auto reply."
+      description: "Returns an auto reply."
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: "The ID of the contact to fetch messages for."
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Contact"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    put:
+      operationId: updateAutoReply
+      tags:
+        - Auto Replies
+      summary: "Updates an autoreply."
+      description: "Updates an autoreply."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the message to update the read status on."
+        - name: updatedMessage
+          in: body
+          schema:
+            $ref: "#/definitions/UpdateMessage"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AutoReply"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    delete:
+      operationId: deleteAutoReplyByID
+      tags:
+        - Auto Replies
+      summary: "Deletes an AutoReply."
+      description: "Delets an AutoReply."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the autoreply to delete."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AutoReply"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /contacts:
+    get:
+      operationId: getAllContactsForCurrentAccount
+      tags:
+        - Contacts
+      summary: "Returns all contacts for the current account."
+      description: "Returns all contacts for the current account."
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+        - name: q
+          in: query
+          type: string
+          required: false
+        - name: order_by_name_then_phone
+          in: query
+          type: boolean
+          required: false
+        - name: scope
+          in: query
+          type: string
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Contact"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    post:
+      operationId: createContact
+      tags:
+        - Contacts
+      summary: "Creates a new Contact."
+      description: "Creates a new Contact."
+      parameters:
+        - name: NewContact
+          in: body
+          schema:
+            $ref: "#/definitions/NewContact"
+          required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Message"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /contacts/{id}:
+    get:
+      operationId: getContactByContactID
+      tags:
+        - Contacts
+      summary: "Returns a contact using the Contact's ID."
+      description: "Returns a contact using the Contact's ID."
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: "The ID of the contact to fetch messages for."
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Contact"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    put:
+      operationId: updateContactByContactID
+      tags:
+        - Contacts
+      summary: "Updates a contact."
+      description: "Updates a contact."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the message to update the read status on."
+        - name: updatedMessage
+          in: body
+          schema:
+            $ref: "#/definitions/UpdateMessage"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Message"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    delete:
+      operationId: deleteContact
+      tags:
+        - Contacts
+      summary: "Delete's a contact."
+      description: "Delete's a contact."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the contact to delete."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Contact"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /messages:
+    get:
+      operationId: getAllMessagesForCurrentAccount
+      tags:
+        - Messages
+      summary: "Returns all messages for the current account."
+      description: "Returns all messages for the current account."
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+        - name: q
+          in: query
+          type: string
+          required: false
+        - name: last_message_to_each_contact
+          in: query
+          type: boolean
+          required: false
+        - name: scope
+          in: query
+          type: string
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Message"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    post:
+      operationId: createAndSendMessage
+      tags:
+        - Messages
+      summary: "Creates and sends a message."
+      description: "Creates and sends a message."
+      parameters:
+        - name: NewMessage
+          in: body
+          schema:
+            $ref: "#/definitions/NewMessage"
+          required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Message"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /messages/{id}:
+    get:
+      operationId: getAllMessagesToAndFromContact
+      tags:
+        - Messages
+      summary: "Returns all messages to and from the specified contact"
+      description: "Returns all messages to and from the specified contact"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: "The ID of the contact to fetch messages for."
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Message"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    put:
+      operationId: updateMessagesReadStatus
+      tags:
+        - Messages
+      summary: "Update's a messages read status."
+      description: "Update's a messages read status."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the message to update the read status on."
+        - name: updatedMessage
+          in: body
+          schema:
+            $ref: "#/definitions/UpdateMessage"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Message"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    delete:
+      operationId: deleteScheduledMessage
+      tags:
+        - Messages
+      summary: "Delete's a scheduled message."
+      description: "Delete's a scheduled message."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the message to delete."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Message"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /opt_outs:
+    get:
+      operationId: getAllOptOutsForCurrentOrganization
+      tags:
+        - Opt Outs
+      summary: "List all opt outs for the current organization."
+      description: "List all opt outs for the current organization."
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+        - name: q
+          in: query
+          type: string
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OptOut"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    post:
+      operationId: createNewOptOut
+      tags:
+        - Opt Outs
+      summary: "Create new opt out."
+      description: "Create new opt out."
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: NewOptOut
+          in: body
+          schema:
+            $ref: "#/definitions/NewOptOut"
+          required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OptOut"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /opt_outs/{id}:
+    get:
+      operationId: retrieveSingleOptOut
+      tags:
+        - Opt Outs
+      summary: "Retrieves a single opt out."
+      description: "Retrieves a single opt out."
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: "The ID of the opt out to fetch."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OptOut"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    put:
+      operationId: updateOptOut
+      tags:
+        - Messages
+      summary: "Update's an opt out."
+      description: "Update's an opt out."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the opt out to update."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OptOut"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+    delete:
+      operationId: deleteOptOut
+      tags:
+        - Opt Outs
+      summary: "Delete's an opt out."
+      description: "Delete's an opt out."
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          format: int64
+          required: true
+          description: "The id of the opt out to delete."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OptOut"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /tags:
+    get:
+      operationId: getAllTags
+      tags:
+        - Tags
+      summary: "Returns all tags for the current account."
+      description: "Returns all tags for the current account."
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/String"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /users:
+    get:
+      operationId: getAllUsersForCurrentAccount
+      tags:
+        - Users
+      summary: "Returns all users for the current account."
+      description: "Returns all users for the current account."
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: per_page
+          in: query
+          type: integer
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          required: false
+        - name: include_archived
+          in: query
+          type: boolean
+          required: false
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /users/{id}:
+    get:
+      operationId: getUser
+      tags:
+        - Users
+      summary: "Returns a user by id."
+      description: "Returns a user by id."
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+          description: "The ID of the user to fetch messages for."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+  /users/current:
+    get:
+      operationId: getCurrentUser
+      tags:
+        - Users
+      summary: "Returns the current user."
+      description: "Returns the current user."
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid Database Id"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        401:
+          description: "Invalid Username or Password"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        403:
+          description: "Forbidden request."
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        404:
+          description: "Endpoint not found"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        405:
+          description: "Access token must be retrieved over SSL"  
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        500:
+          description: "Session Expired"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        503:
+          description: "Service is unavailable"
+          schema:
+            $ref: "#/definitions/NotOkayResponse"
+        default:
+          description: "Unexpected response"
+definitions:
+  ##########################
+  #                        #
+  #  RESPONSE DEFINITIONS  #
+  #                        #
+  ##########################
+  NotOkayResponse:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          type: string
+  ##########################
+  #                        #
+  #   OBJECT DEFINITIONS   #
+  #                        #
+  ##########################
+  String:
+    type: string
+  AutoReplies:
+    items:
+      "$ref": "#/definitions/AutoReply"
+    type: array
+  AutoReply:
+    properties:
+      account_id:
+        type: integer
+        format: int64
+      message:
+        type: string
+        description: "Auto reply message"
+      is_active:
+        type: boolean
+        description: "Auto reply status (true or false)"
+      id:
+        type: integer
+        format: int64
+      updated_at:
+        type: string
+        format: datetime
+      created_at:
+        type: string
+        format: datetime
+    type: object
+  NewAutoReply:
+    properties:
+      message:
+        type: string
+        description: "Auto reply message."
+      is_active:
+        type: boolean
+        description: "Auto reply status (true or false)"
+    required:
+      - message
+    type: object
+  UpdateAutoReply:
+    properties:
+      message:
+        type: string
+        description: "Auto reply message."
+      is_active:
+        type: boolean
+        description: "Auto reply status (true or false)"
+    type: object
+  BlockedNumbers:
+    items:
+      "$ref": "#/definitions/BlockedNumber"
+    type: array
+  BlockedNumber:
+    properties:
+      phone:
+        type: string
+        description: "Phone number"
+      updated_at:
+        type: string
+        format: datetime
+      created_at:
+        type: string
+        format: datetime
+      id:
+        type: integer
+        format: int64
+      organization_id:
+        type: integer
+        format: int64
+    type: object
+  NewBlockedNumber:
+    properties:
+      phone:
+        type: string
+        description: "Phone number"
+      country:
+        type: string
+        description: "Two-digit country code for blocked phone number."
+    required:
+      - phone
+    type: object
+  Broadcasts:
+    items:
+      "$ref": "#/definitions/Broadcast"
+    type: array
+  Broadcast:
+    properties:
+      user_id:
+        type: integer
+        format: int64
+      group_id:
+        type: integer
+        format: int64
+      message_body:
+        type: string
+      status:
+        type: string
+      deliver_at:
+        type: string
+        format: datetime
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+      group_name:
+        type: string
+      total_messages:
+        type: integer
+        format: int64
+    type: object
+  NewBroadcast:
+    properties:
+      sender:
+        type: integer
+        format: int64
+      group:
+        type: integer
+        format: int64
+      message_body:
+        type: string
+      deliver_at:
+        type: string
+        format: datetime
+      from_template:
+        type: boolean
+    required:
+      - sender
+      - group
+      - message_body
+    type: object
+  Contacts:
+    items:
+      "$ref": "#/definitions/Contact"
+    type: array
+  ContactsScribe:
+    items:
+      "$ref": "#/definitions/ContactScribe"
+    type: array
+  Contact:
+    properties:
+      business_name:
+        type: string
+      account_id:
+        type: integer
+        format: int64
+      flagged:
+        type: boolean
+      notes:
+        type: string
+      phone:
+        type: string
+      country:
+        type: string
+      line_type:
+        type: string
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+      first_name:
+        type: string
+      last_name:
+        type: string
+      opted_out:
+        type: boolean
+      tags:
+        "$ref": "#/definitions/Tags"
+    type: object
+  ContactScribe:
+    properties:
+      business_name:
+        type: string
+      account_id:
+        type: integer
+        format: int64
+      flagged:
+        type: boolean
+      notes:
+        type: string
+      phone:
+        type: string
+      country:
+        type: string
+      line_type:
+        type: string
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+      first_name:
+        type: string
+      last_name:
+        type: string
+      opted_out:
+        type: boolean
+    type: object
+  NewContact:
+    properties:
+      business_name:
+        type: string
+      phone:
+        type: string
+      country:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      tags:
+        "$ref": "#/definitions/Tags"
+    required:
+      - phone
+    type: object
+  UpdateContact:
+    properties:
+      phone:
+        type: string
+      country:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      business_name:
+        type: string
+      flagged:
+        type: boolean
+      notes:
+        type: string
+      tags:
+        "$ref": "#/definitions/Tags"
+    type: object
+  Groups:
+    items:
+      "$ref": "#/definitions/Group"
+    type: array
+  Group:
+    properties:
+      name:
+        type: string
+      account_id:
+        type: integer
+        format: int64
+      locked:
+        type: boolean
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+      size:
+        type: integer
+        format: int64
+    type: object
+  NewGroup:
+    properties:
+      name:
+        type: string
+        description: "The name of the group."
+    required:
+      - name
+    type: object
+  UpdateGroup:
+    properties:
+      name:
+        type: string
+        description: "The new name of the group."
+    type: object
+  MessageSignatures:
+    items:
+      "$ref": "#/definitions/MessageSignature"
+    type: array
+  MessageSignature:
+    properties:
+      content:
+        type: string
+      is_active:
+        type: boolean
+      account_id:
+        type: integer
+        format: int64
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+    type: object
+  NewMessageSignature:
+    properties:
+      content:
+        type: string
+      is_active:
+        type: boolean
+    required:
+      - content
+    type: object
+  UpdateMessageSignature:
+    properties:
+      content:
+        type: string
+      is_active:
+        type: boolean
+    type: object
+  MessageTemplates:
+    items:
+      "$ref": "#/definitions/MessageTemplate"
+    type: array
+  MessageTemplate:
+    properties:
+      content:
+        type: string
+      title:
+        type: string
+      owner_id:
+        type: integer
+        format: int64
+      owner_type:
+        type: string
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+      account_id:
+        type: integer
+        format: int64
+    type: object
+  NewMessageTemplate:
+    properties:
+      content:
+        type: string
+        description: "Message template content"
+      title:
+        type: string
+        description: "Message template title"
+      owner_type:
+        type: string
+        description: "Org Admins can define if a template is made available to all users in the organization or an account"
+    required:
+      - title
+      - content
+    type: object
+  UpdateMessageTemplate:
+    properties:
+      content:
+        type: string
+        description: "Message template content"
+      title:
+        type: string
+        description: "Message template title"
+      owner_type:
+        type: string
+        description: "Org Admins can define if a template is made available to all users in the organization or an account"
+      is_active:
+        type: string
+        description: "Message template activation status (true or false)"
+    required:
+      - title
+      - content
+    type: object
+  Messages:
+    items:
+      "$ref": "#/definitions/Message"
+    type: array
+  Message:
+    properties:
+      read:
+        type: boolean
+      broadcast_id:
+        type: string
+      status:
+        type: string
+      deliver_at:
+        type: string
+      from_autoresponse:
+        type: string
+      id:
+        type: integer
+      created_at:
+        type: string
+      updated_at:
+        type: string
+      sender_id:
+        type: integer
+      receiver_id:
+        type: integer
+      sender_type:
+        type: string
+      receiver_type:
+        type: string
+      content:
+        type: string
+      sender_phone:
+        type: string
+      sender_name:
+        type: string
+      sender_email:
+        type: string
+      receiver_phone:
+        type: string
+      receiver_name:
+        type: string
+      image_url:
+        type: string
+      thumb_url:
+        type: string
+      media_urls:
+        type: string
+    type: object
+  NewMessage:
+    properties:
+      sender:
+        type: string
+        description: "The sending user's id or email address"
+      receiver:
+        type: string
+        description: "The receiving contact's id or phone number(international format e.g. must begin with a '+' sign)If no contact exists with that phone number, one will be created automaticallywith no name." 
+      deliver_at:
+        type: string
+        description: "Delivery Date and Time (to schedule messages)"
+      content:
+        type: string
+        description: "The message content"
+      file:
+        type: string
+        format: binary
+        description: "Image attachment to be sent with message"
+    required:
+      - sender
+      - receiver
+    type: object
+  UpdateMessage:
+    properties:
+      read:
+        type: boolean
+    required:
+      - read
+    type: object
+  OptOuts:
+    items:
+      "$ref": "#/definitions/OptOut"
+    type: array
+  OptOut:
+    properties:
+      organization_id:
+        type: integer
+        format: int64
+      opt_in:
+        type: boolean
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+      phone:
+        type: string
+    type: object
+  NewOptOut:
+    properties:
+      phone:
+        type: string
+        description: "Opt out phone number"
+      country:
+        type: string
+        description: "Two-digit country code for opt out phone number."
+    required:
+      - phone
+    type: object
+  Tags:
+    items:
+      type: string
+    type: array
+  Users:
+    items:
+      "$ref": "#/definitions/User"
+    type: array
+  User:
+    properties:
+      email:
+        type: string
+        format: email
+      first_name:
+        type: string
+      last_name:
+        type: string
+      account_id:
+        type: integer
+        format: int64
+      role:
+        type: string
+      archived:
+        type: boolean
+      last_sign_in_at:
+        type: string
+        format: datetime
+      should_play_audio:
+        type: boolean
+      forward_messages:
+        type: string
+      terms_accepted:
+        type: boolean
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+      web_push_enabled:
+        type: boolean
+      v3_enabled:
+        type: boolean
+    type: object
+  Webhooks:
+    items:
+      "$ref": "#/definitions/Webhook"
+    type: array
+  Webhook:
+    properties:
+      url:
+        type: string
+      web_hookable_type:
+        type: string
+      web_hookable_id:
+        type: integer
+        format: int64
+      version:
+        type: string
+      secret:
+        type: string
+      id:
+        type: integer
+        format: int64
+      created_at:
+        type: string
+        format: datetime
+      updated_at:
+        type: string
+        format: datetime
+    type: object
